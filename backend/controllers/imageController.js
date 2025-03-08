@@ -21,7 +21,6 @@ const uploadImage = async (req, res) => {
         for (let image of images) {
             const result = await cloudinary.uploader.upload(image.tempFilePath);
             uploadedImages.push(result.secure_url);
-            console.log(uploadedImages)
         }
 
         res.json({ images: uploadedImages });

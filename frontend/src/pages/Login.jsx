@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useIsLoggedStore } from '../utils/store';
 
 const Login = () => {
@@ -17,7 +17,6 @@ const Login = () => {
 
         try {
 
-            const token = localStorage.getItem('token');
 
 
             const response = await fetch('http://localhost:3000/auth/login', {
@@ -29,7 +28,6 @@ const Login = () => {
             });
             const data = await response.json();
             localStorage.setItem('token', data.token);
-            localStorage.setItem('email', data.user.email);
             setIsLoggedIn(true);
             navigate('/create');
 

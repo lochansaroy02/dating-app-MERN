@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useEmailStore } from '../utils/store';
 
 const SignUp = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-
+    const setUserEmail = useEmailStore((state) => state.setUserEmail);
 
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
@@ -20,6 +21,7 @@ const SignUp = () => {
                 body: JSON.stringify({ name, email, password }),
             });
             const data = await response.json();
+            localStorage.setItem('email', email);
             navigate('/login');
             if (data.success) {
 

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
-import { useImageStore } from "../utils/store";
+import { useNavigate } from "react-router-dom";
+import { useImageStore, useThisUserStore } from "../utils/store";
 import ImageUpload from './ImageUpload';
 
 const CreateProfile = () => {
@@ -16,6 +17,10 @@ const CreateProfile = () => {
 
 
 
+    const navigate = useNavigate();
+
+    const setThisUserData = useThisUserStore((state) => state.setThisUserData);
+
 
     const imageData = useImageStore((state) => state.imageData);
 
@@ -30,7 +35,7 @@ const CreateProfile = () => {
         formData.append("gender", gender);
         formData.append("relationship", relationship);
         formData.append("religion", religion);
-        formData.append("email", email);
+        formData.append("email", localStorage.getItem('email'));
         formData.append("images", imageData);
 
 
@@ -41,8 +46,9 @@ const CreateProfile = () => {
                 },
             });
             alert("Profile created successfully");
-            console.log("User created:", response.data);
-
+            console.log(response?.data);
+            setThisUserData(response?.data);
+            navigate("/feed");
         } catch (error) {
             console.error("Error creating user:", error);
             alert("Failed to create profile");
@@ -60,7 +66,6 @@ const CreateProfile = () => {
 
     useEffect(() => {
         setEmail(localStorage.getItem('email'));
-        console.log("this is email " + email);
     }, [])
 
 

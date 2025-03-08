@@ -5,8 +5,9 @@ import Feed from './pages/Feed';
 import Home from './pages/Home';
 import ImageUpload from './pages/ImageUpload';
 import Login from './pages/Login';
-import SignUp from './pages/SignUp';
 import Navbar from './pages/Navbar';
+import SignUp from './pages/SignUp';
+import Profile from './pages/Profile';
 
 
 
@@ -14,7 +15,12 @@ import Navbar from './pages/Navbar';
 const App = () => {
 
 
-
+  const data = localStorage.getItem('user');
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+  }, [data])
 
   return (
 
@@ -31,6 +37,7 @@ const App = () => {
         <Route path="/create" element={<CreateProfile />} />
         <Route path="/image" element={<ImageUpload />} />
         <Route path="/feed" element={<Feed />} />
+        <Route path="/profile" element={<Profile />} />
 
         {/* <Route path="/" element={<Navigate to="/login" />} /> */}
       </Routes>

@@ -9,10 +9,10 @@ const cors = require("cors");
 
 const app = express();
 const port = 3000;
+app.use(cors());
 
 
 app.use(express.json());
-app.use(cors());
 // Middleware for handling file uploads
 app.use(fileUpload({
     useTempFiles: true,
@@ -27,6 +27,8 @@ app.use('/user', userRoute);
 app.use('/auth', authRoute)
 
 app.use('/image', imageRoute)
+
+
 
 
 app.listen(port, () => {

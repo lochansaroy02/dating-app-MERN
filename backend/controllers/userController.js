@@ -29,7 +29,7 @@ const createUser = async (req, res) => {
 
 
 const deleteUser = async (req, res) => {
-    const { userId } = req.param;
+    const { userId } = req.params;
 
     try {
         const user = await User.findByIdAndDelete(userId);
@@ -44,9 +44,45 @@ const deleteUser = async (req, res) => {
 }
 
 const updateLikes = async (req, res) => {
-    const loggedInUser = req.user;
-    const { userId } = req.body;
+    try {
+        const { userId } = req.params;  // Ensure userId is extracted correctly
+        const { likerId } = req.body;
 
+        if (!userId || !likerId) {
+            return res.status(400).json({ message: "Missing userId or likerId" });
+        }
+
+        // Find the liked user
+        const likedUser = await User.findById(userId);
+        if (!likedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Prevent duplicate likes
+        if (likedUser.likedBy.includes(likerId)) {
+            return res.status(400).json({ message: "User already liked" });
+        }
+
+        // Add likerId to likes array
+        likedUser.likedBy.push(likerId);
+        await likedUser.save();
+
+        // Find the liker user
+        const likerUser = await User.findById(likerId);
+        if (!likerUser) {
+            return res.status(404).json({ message: "Liker not found" });
+        }
+
+        // Ensure liked user's ID is added to likedBy array
+        if (!likerUser.likes.includes(userId)) {
+            likerUser.likes.push(userId);
+            await likerUser.save();
+        }
+
+        res.status(200).json({ message: "User liked successfully", likedUser, likerUser });
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error", error: error.message });
+    }
 }
 
 
@@ -61,4 +97,6 @@ const getUsers = async (req, res) => {
 
 
 }
-module.exports = { createUser, getUsers, deleteUser };
+
+
+module.exports = { createUser, getUsers, deleteUser, updateLikes };
