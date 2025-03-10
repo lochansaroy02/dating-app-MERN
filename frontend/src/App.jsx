@@ -8,6 +8,8 @@ import Login from './pages/Login';
 import Navbar from './pages/Navbar';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
+import Footer from './pages/Footer';
+import Task from './pages/Task';
 
 
 
@@ -38,9 +40,12 @@ const App = () => {
         <Route path="/image" element={<ImageUpload />} />
         <Route path="/feed" element={<Feed />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/task" element={<Task />} />
+
 
         {/* <Route path="/" element={<Navigate to="/login" />} /> */}
       </Routes>
+      <Footer />
     </Router>
   )
 }

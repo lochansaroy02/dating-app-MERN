@@ -1,16 +1,16 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useThisUserStore, useUserStore } from '../utils/store';
-import Card from './Card';
 
 const Feed = () => {
     const userData = useUserStore((state) => state.userData);
     const setUserData = useUserStore((state) => state.setUserData);
-
+    const setThisUserData = useThisUserStore((state) => state.setThisUserData);
     const email = localStorage.getItem('email');
     useEffect(() => {
         // console.log(email);
     }, []);
+
 
 
     const getUser = async () => {
@@ -28,25 +28,24 @@ const Feed = () => {
     const handleLikes = async (userId) => {
         const thisUserData = useThisUserStore.getState().thisUserData;
         const likerId = thisUserData?.data?._id;
-        console.log(likerId, " ", userId);
+
         if (!likerId) {
             console.error("Liker ID is missing");
             return;
         }
+
         try {
             const response = await axios.put(`http://localhost:3000/user/likes/${userId}`, { likerId });
-            console.log("Like response:", response.data);
-            useThisUserStore.setState((state) => ({
-                thisUserData: {
-                    ...state.thisUserData,
-                    likes: [...state.thisUserData.likes, userId],
-                }
-            }));
-            console.log(data);
+
+            setThisUserData(response.data);
+            // Update the local state to reflect the like action
+
+
         } catch (error) {
             console.error('Error liking user:', error);
         }
-    }
+    };
+
 
 
 

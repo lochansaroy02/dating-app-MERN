@@ -6,10 +6,10 @@ const Profile = () => {
 
     useEffect(() => {
         console.log(thisUserData);
-    }, [thisUserData]); // Runs every time thisUserData updates
+    }, [thisUserData]);
 
     return (
-        <div className='m-4'>
+        <div className='m-4 h-screen'>
             <h2>Profile</h2>
             {thisUserData ? (
                 <div>

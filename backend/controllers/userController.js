@@ -42,50 +42,42 @@ const deleteUser = async (req, res) => {
     }
 
 }
-
 const updateLikes = async (req, res) => {
     try {
-        const { userId } = req.params;  // Ensure userId is extracted correctly
-        const { likerId } = req.body;
+        const { userId } = req.params; // The user who is being liked
+        const { likerId } = req.body; // The user who likes
 
         if (!userId || !likerId) {
             return res.status(400).json({ message: "Missing userId or likerId" });
         }
 
-        // Find the liked user
-        const likedUser = await User.findById(userId);
-        if (!likedUser) {
+        // Find users
+        const userData = await User.findById(userId);
+        const likerData = await User.findById(likerId);
+
+        if (!userData || !likerData) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // Prevent duplicate likes
-        if (likedUser.likedBy.includes(likerId)) {
+        // Check if liker has already liked the user
+        if (userData.likedBy.includes(likerId)) {
             return res.status(400).json({ message: "User already liked" });
         }
-
-        // Add likerId to likes array
-        likedUser.likedBy.push(likerId);
-        await likedUser.save();
-
-        // Find the liker user
-        const likerUser = await User.findById(likerId);
-        if (!likerUser) {
-            return res.status(404).json({ message: "Liker not found" });
+        if (likerData.likes.includes(userId)) {
+            return res.status(400).json({ message: "User already in likes" });
         }
 
-        // Ensure liked user's ID is added to likedBy array
-        if (!likerUser.likes.includes(userId)) {
-            likerUser.likes.push(userId);
-            await likerUser.save();
-        }
+        // Update likedBy array in the user who got liked
+        await User.findByIdAndUpdate(userId, { $push: { likedBy: likerId } });
 
-        res.status(200).json({ message: "User liked successfully", likedUser, likerUser });
+        // Update likes array in the liker
+        await User.findByIdAndUpdate(likerId, { $push: { likes: userId } });
+
+        res.status(200).json({ message: "User liked successfully", data: likerData });
     } catch (error) {
         res.status(500).json({ message: "Internal server error", error: error.message });
     }
-}
-
-
+};
 
 const getUsers = async (req, res) => {
     try {

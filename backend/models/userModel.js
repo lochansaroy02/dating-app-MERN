@@ -8,8 +8,8 @@ const userSchema = new schema({
     gender: { type: String, required: true },
     relationship: { type: String, required: true },
     religion: { type: String, required: true },
-    likedBy: { type: Array, default: [], required: false },
-    likes: { type: Array, default: [], required: false },
+    likedBy: { type: Array, default: [Object], required: false },
+    likes: { type: Array, default: [Object], required: false },
     images: { type: Array, default: [], required: false }
 })
 
