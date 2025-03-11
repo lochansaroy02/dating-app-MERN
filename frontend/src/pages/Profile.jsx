@@ -3,9 +3,8 @@ import { useThisUserStore } from '../utils/store';
 
 const Profile = () => {
     const thisUserData = useThisUserStore((state) => state.thisUserData);
-
     useEffect(() => {
-        console.log(thisUserData);
+        console.log(thisUserData)
     }, [thisUserData]);
 
     return (

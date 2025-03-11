@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useThisUserStore } from '../utils/store';
 
@@ -9,7 +9,6 @@ const Navbar = () => {
     const data = useThisUserStore((state) => state.thisUserData);
 
     const token = localStorage.getItem('token');
-    const thisUserData = localStorage.getItem('thisUserData');
     const navigate = useNavigate();
 
     const handleClick = () => {

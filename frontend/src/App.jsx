@@ -10,6 +10,7 @@ import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import Footer from './pages/Footer';
 import Task from './pages/Task';
+import Card from './pages/Card';
 
 
 
@@ -41,6 +42,8 @@ const App = () => {
         <Route path="/feed" element={<Feed />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/task" element={<Task />} />
+        <Route path="/card" element={<Card />} />
+
 
 
         {/* <Route path="/" element={<Navigate to="/login" />} /> */}

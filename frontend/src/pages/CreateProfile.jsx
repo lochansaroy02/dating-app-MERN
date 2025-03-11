@@ -47,7 +47,6 @@ const CreateProfile = () => {
             });
             alert("Profile created successfully");
             setThisUserData(response?.data);
-            localStorage.setItem('thisUserData', response.data);
             navigate("/feed");
         } catch (error) {
             console.error("Error creating user:", error);
