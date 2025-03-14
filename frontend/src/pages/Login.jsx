@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useIsLoggedStore } from '../utils/store';
+import { useIsLoggedStore, useThisUserStore } from '../utils/store';
 
 const Login = () => {
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -10,7 +11,7 @@ const Login = () => {
 
     const setIsLoggedIn = useIsLoggedStore((state) => state.setIsLoggedIn);
 
-
+    const setThisUserData = useThisUserStore((state) => state.setThisUserData)
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -29,12 +30,20 @@ const Login = () => {
             const data = await response.json();
             localStorage.setItem('token', data.token);
             setIsLoggedIn(true);
-            navigate('/create');
+            setThisUserData(data.userData);
+            if (data) {
+                navigate('/feed');
+            } else {
+                navigate('/create');
+            }
 
         } catch (error) {
             console.log(error);
         }
     }
+
+    useEffect(() => {
+    }, [])
     return (
         <div>
             <section className="bg-neutral-50 h-screen  dark:bg-neutral-900">
@@ -72,7 +81,7 @@ const Login = () => {
                                         type="password"
                                         name="password"
                                         onChange={(e) => setPassword(e.target.value)}
-                                        placeholder="••••••••"
+                                        placeholder="enter password"
                                         className="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-neutral-700 dark:border-neutral-600 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         required
                                     />

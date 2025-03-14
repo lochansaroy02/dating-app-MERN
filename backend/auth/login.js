@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Auth = require('../models/authModel');
+const User = require('../models/userModel')
 require('dotenv').config();
 
 async function login(req, res) {
@@ -19,6 +20,9 @@ async function login(req, res) {
             return res.status(401).json({ message: 'Invalid password' });
         }
 
+        const userData = await User.findOne({ email });
+
+
         // Generate JWT token
         const token = jwt.sign(
             { userId: user._id },
@@ -27,13 +31,16 @@ async function login(req, res) {
         );
 
         // Return token and user info (excluding password)
+
         res.status(200).json({
             token,
             user: {
                 id: user._id,
                 email: user.email,
-                name: user.name
-            }
+                name: user.name,
+            },
+            userData: userData
+
         });
 
     } catch (error) {

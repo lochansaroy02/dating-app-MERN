@@ -22,7 +22,7 @@ const uploadImage = async (req, res) => {
             const result = await cloudinary.uploader.upload(image.tempFilePath);
             uploadedImages.push(result.secure_url);
         }
-
+        // const 
         res.json({ images: uploadedImages });
     } catch (error) {
         res.status(500).json({ error: error.message });

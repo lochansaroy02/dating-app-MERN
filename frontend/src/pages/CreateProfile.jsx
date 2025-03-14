@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useImageStore, useThisUserStore } from "../utils/store";
 import ImageUpload from './ImageUpload';
+import toast from "react-hot-toast";
 
 const CreateProfile = () => {
     const [name, setName] = useState("");
@@ -45,8 +46,10 @@ const CreateProfile = () => {
                     "Content-Type": "multipart/form-data",
                 },
             });
-            alert("Profile created successfully");
-            setThisUserData(response?.data);
+            toast.success("profile created!")
+
+            setThisUserData(response?.data?.data);
+            console.log(response?.data?.data);
             navigate("/feed");
         } catch (error) {
             console.error("Error creating user:", error);
@@ -58,8 +61,6 @@ const CreateProfile = () => {
             setRelationship("");
             setReligion("");
             setEmail("");
-            setLikedBy([]);
-
         }
     };
 

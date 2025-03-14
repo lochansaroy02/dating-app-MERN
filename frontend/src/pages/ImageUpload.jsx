@@ -35,6 +35,7 @@ const ImageUpload = () => {
                 },
             });
             setImageData(response.data.images);
+            console.log(response.data);
 
         } catch (error) {
             console.error("Upload failed:", error);

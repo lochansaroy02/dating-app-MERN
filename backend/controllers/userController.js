@@ -16,6 +16,7 @@ const createUser = async (req, res) => {
             const result = await cloudinary.uploader.upload(image.tempFilePath);
             imagesArray.push(result); // Store only the URL
         }
+        console.log(imagesArray);
     }
     try {
         const user = new User({ name, email, age, gender, relationship, religion, likedBy, likes, images });

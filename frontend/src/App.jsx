@@ -1,16 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Card from './pages/Card';
 import CreateProfile from './pages/CreateProfile';
+import Error from './pages/Error';
 import Feed from './pages/Feed';
+import Footer from './pages/Footer';
 import Home from './pages/Home';
 import ImageUpload from './pages/ImageUpload';
 import Login from './pages/Login';
 import Navbar from './pages/Navbar';
-import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
-import Footer from './pages/Footer';
+import SignUp from './pages/SignUp';
 import Task from './pages/Task';
-import Card from './pages/Card';
 
 
 
@@ -18,12 +19,7 @@ import Card from './pages/Card';
 const App = () => {
 
 
-  const data = localStorage.getItem('user');
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-    }
-  }, [data])
+
 
   return (
 
@@ -43,8 +39,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/task" element={<Task />} />
         <Route path="/card" element={<Card />} />
-
-
+        <Route path="*" element={<Error />} />
 
         {/* <Route path="/" element={<Navigate to="/login" />} /> */}
       </Routes>
