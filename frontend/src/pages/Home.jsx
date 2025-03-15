@@ -1,9 +1,27 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useThisUserStore, useUserStore } from "../utils/store";
 
 const Home = () => {
 
+  const setUserData = useUserStore((state) => state.setUserData);
 
+
+
+  const getUser = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/user/get');
+      const data = await response.data;
+      setUserData(data.data);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, [])
   const navigate = useNavigate();
 
   return (

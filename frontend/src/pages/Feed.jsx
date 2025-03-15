@@ -6,7 +6,6 @@ import Card from './Card';
 
 const Feed = () => {
     const userData = useUserStore((state) => state.userData);
-    const setUserData = useUserStore((state) => state.setUserData);
 
     const thisUserData = useThisUserStore((state) => state.thisUserData);
     const currentUserId = thisUserData?.data?._id;
@@ -14,15 +13,6 @@ const Feed = () => {
 
 
 
-    const getUser = async () => {
-        try {
-            const response = await axios.get('http://localhost:3000/user/get');
-            const data = await response.data;
-            setUserData(data.data);
-        } catch (error) {
-            console.error('Error fetching users:', error);
-        }
-    };
 
 
 
@@ -31,14 +21,9 @@ const Feed = () => {
 
 
 
-    useEffect(() => {
-
-        getUser();
-
-    }, []);
 
     return (
-        <div className="m-8    text-white">
+        <div className="m-8     text-white">
 
             <div className='  grid grid-cols-3 gap-4'>
 

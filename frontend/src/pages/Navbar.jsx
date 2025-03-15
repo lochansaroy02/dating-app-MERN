@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useThisUserStore } from '../utils/store';
+import toast from "react-hot-toast";
 
 const Navbar = () => {
 
@@ -15,7 +16,8 @@ const Navbar = () => {
         if (token) {
             localStorage.removeItem('token');
             localStorage.removeItem('email');
-            setThisUserData(null)
+            setThisUserData(null);
+            toast.success('logged out')
             navigate('/');
         } else {
             navigate('/login');
