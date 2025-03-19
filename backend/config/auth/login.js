@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const Auth = require('../models/authModel');
-const User = require('../models/userModel')
+const User = require('../../models/userModel')
+const Auth = require('../../models/authModel')
 require('dotenv').config();
 
 async function login(req, res) {
@@ -29,7 +29,6 @@ async function login(req, res) {
             process.env.JWT_SECRET,
             { expiresIn: '24h' }
         );
-
         // Return token and user info (excluding password)
 
         res.status(200).json({

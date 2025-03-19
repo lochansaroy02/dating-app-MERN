@@ -10,12 +10,7 @@ const userSchema = new schema({
     religion: { type: String, required: true },
     likedBy: { type: Array, default: [Object], required: false },
     likes: { type: Array, default: [Object], required: false },
-    images: { type: Array, default: [], required: false }
+    images: { type: Array, default: [] },
 })
-
-
-
-
-
 
 module.exports = mongoose.model('User', userSchema); // this is default export so we don't need to use {} to import

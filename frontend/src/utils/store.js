@@ -32,3 +32,11 @@ export const useIsLoggedStore = create((set) => ({
     isLoggedIn: false,
     setIsLoggedIn: (data) => set({ isLoggedIn: data }),
 }));
+
+
+export const useLikesStore = create((set) => ({
+    likes: [],
+    setLikes: (data) => set({
+        likes: data
+    })
+}))

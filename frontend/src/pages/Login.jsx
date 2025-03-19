@@ -31,11 +31,7 @@ const Login = () => {
             localStorage.setItem('token', data.token);
             setIsLoggedIn(true);
             setThisUserData(data.userData);
-            if (data) {
-                navigate('/feed');
-            } else {
-                navigate('/create');
-            }
+            navigate('/create')
 
         } catch (error) {
             console.log(error);

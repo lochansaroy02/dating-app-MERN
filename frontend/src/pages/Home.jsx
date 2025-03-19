@@ -39,6 +39,11 @@ const Home = () => {
         }} className='bg-blue-500 cursor-pointer text-white px-4 py-2 rounded-md'>
           Go to Feed
         </button>
+        <button onClick={() => {
+          navigate('/chat')
+        }} className='bg-blue-500 cursor-pointer text-white px-4 py-2 rounded-md'>
+          chat
+        </button>
       </div>
 
     </div>

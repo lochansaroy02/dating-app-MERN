@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useImageStore, useThisUserStore } from "../utils/store";
 import ImageUpload from './ImageUpload';
-import toast from "react-hot-toast";
 
 const CreateProfile = () => {
     const [name, setName] = useState("");
@@ -40,6 +40,7 @@ const CreateProfile = () => {
         formData.append("images", imageData);
 
 
+
         try {
             const response = await axios.post("http://localhost:3000/user/create", formData, {
                 headers: {
@@ -50,7 +51,7 @@ const CreateProfile = () => {
 
             setThisUserData(response?.data?.data);
             console.log(response?.data?.data);
-            navigate("/feed");
+            // navigate("/feed");
         } catch (error) {
             console.error("Error creating user:", error);
             alert("Failed to create profile");
