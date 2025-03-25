@@ -1,14 +1,18 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useThisUserStore, useUserStore } from "../utils/store";
+import { useSocketStore, useThisUserStore, useUserStore } from "../utils/store";
 
 const Home = () => {
 
   const setUserData = useUserStore((state) => state.setUserData);
 
+  const { authUser, onlineUser } = useSocketStore()
 
-
+  useEffect(() => {
+    console.log(authUser);
+    // console.log(onlineUser)
+  }, [authUser])
   const getUser = async () => {
     try {
       const response = await axios.get('http://localhost:3000/user/get');
@@ -43,6 +47,11 @@ const Home = () => {
           navigate('/chat')
         }} className='bg-blue-500 cursor-pointer text-white px-4 py-2 rounded-md'>
           chat
+        </button>
+        <button onClick={() => {
+          navigate('/create')
+        }} className='bg-blue-500 cursor-pointer text-white px-4 py-2 rounded-md'>
+          Create
         </button>
       </div>
 

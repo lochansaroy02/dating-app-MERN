@@ -56,9 +56,7 @@ const ImageUpload = () => {
     };
 
 
-    useEffect(() => {
-        console.log(imageData)
-    }, [imageData])
+
 
     return (
         <div className="mt-8 flex flex-col justify-center items-center text-white">

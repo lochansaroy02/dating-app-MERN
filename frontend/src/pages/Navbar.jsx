@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useThisUserStore } from '../utils/store';
+import { useSocketStore, useThisUserStore } from '../utils/store';
 import toast from "react-hot-toast";
 
 const Navbar = () => {
@@ -12,13 +12,18 @@ const Navbar = () => {
     const imageArr = data?.images?.[0]?.split(',');
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
+
+    const { disconnectSocket } = useSocketStore()
     const handleClick = () => {
+
         if (token) {
             localStorage.removeItem('token');
             localStorage.removeItem('email');
             setThisUserData(null);
-            toast.success('logged out')
+            toast.success('logged out');
+            disconnectSocket();
             navigate('/');
+            window.location.reload();
         } else {
             navigate('/login');
         }

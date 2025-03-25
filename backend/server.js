@@ -1,4 +1,5 @@
 const express = require('express');
+require('colors');
 const fileUpload = require("express-fileupload");
 const { connectToMongoDB } = require('./config/db');
 const userRoute = require('./routes/userRoute');
@@ -6,8 +7,9 @@ const authRoute = require('./routes/authRoute');
 const imageRoute = require('./routes/imageRoute');
 const messageRoute = require('./routes/messageRoute');
 const cors = require("cors");
+const { app, server } = require('./config/socket');
 
-const app = express();
+
 
 const port = 3000;
 app.use(fileUpload());
@@ -32,8 +34,7 @@ app.use('/message', messageRoute)
 
 
 
-
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+server.listen(port, () => {
+    console.log(`Server is running on port ${port}`.yellow);
 });
 

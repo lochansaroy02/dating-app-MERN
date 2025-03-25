@@ -14,6 +14,9 @@ importers:
       cloudinary:
         specifier: ^2.5.1
         version: 2.5.1
+      colors:
+        specifier: ^1.4.0
+        version: 1.4.0
       cookie-parser:
         specifier: ^1.4.7
         version: 1.4.7

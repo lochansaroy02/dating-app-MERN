@@ -4,7 +4,7 @@ import { useChatStore } from "../utils/store/chatStore";
 import Sidebar from "./components/chat/Sidebar";
 import NoChat from "./components/chat/NoChat";
 import ChatContainer from "./components/chat/ChatContainer";
-
+import Feed from "../pages/Feed"
 const Chat = () => {
 
     const { selectedUser } = useChatStore();
@@ -12,22 +12,22 @@ const Chat = () => {
 
 
     useEffect(() => {
-        // console.log(localStorage.getItem("token"))
         // getChatUsers();
     }, [])
     return (
-        <div className='h-screen bg-neutral-800'>
-            <div className="flex items-center justify-center pt-20 px-4  ">
-                <div className="bg-neutral-700 rounded-lg  shadow-xl w-full max-w-6xl h-[calc(100vh-8rem )]">
-                    <div className="flex h-full rounded-lg overflow-hidden ">
+        <div className=' bg-neutral-800'>
+            <div className="flex items-center justify-center py-4  px-4  ">
+                <div className="bg-neutral-700 rounded-lg  h-[calc(100vh-8rem)] shadow-xl w-full max-w-6xl ">
+                    <div className="flex  rounded-lg overflow-hidden ">
                         <Sidebar />
+
                         {
-                            !selectedUser ? <NoChat /> : <ChatContainer />
+                            selectedUser == null ? <NoChat /> : < ChatContainer />
                         }
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

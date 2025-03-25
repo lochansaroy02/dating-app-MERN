@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useIsLoggedStore, useThisUserStore } from '../utils/store';
+import { useIsLoggedStore, useSocketStore, useThisUserStore } from '../utils/store';
 
 const Login = () => {
 
@@ -12,6 +12,9 @@ const Login = () => {
     const setIsLoggedIn = useIsLoggedStore((state) => state.setIsLoggedIn);
 
     const setThisUserData = useThisUserStore((state) => state.setThisUserData)
+
+    const { setSocket, connectSocket, setAuthUser } = useSocketStore()
+
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -29,8 +32,12 @@ const Login = () => {
             });
             const data = await response.json();
             localStorage.setItem('token', data.token);
+            localStorage.setItem('data', JSON.stringify(data.user));
+
             setIsLoggedIn(true);
             setThisUserData(data.userData);
+            setAuthUser(data.userData);
+            connectSocket();
             navigate('/create')
 
         } catch (error) {

@@ -1,1 +1,0 @@
-- tinder card react library

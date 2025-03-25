@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Card from './pages/Card';
+import Chat from './pages/Chat';
 import CreateProfile from './pages/CreateProfile';
 import Error from './pages/Error';
 import Feed from './pages/Feed';
@@ -12,7 +13,7 @@ import Navbar from './pages/Navbar';
 import Profile from './pages/Profile';
 import SignUp from './pages/SignUp';
 import Task from './pages/Task';
-import Chat from './pages/Chat';
+import { useSocketStore } from './utils/store';
 
 
 
@@ -20,6 +21,20 @@ import Chat from './pages/Chat';
 const App = () => {
 
 
+  const { connectSocket, onlineUser } = useSocketStore();
+
+  const authChecker = () => {
+    const token = localStorage.getItem("token")
+    if (token) {
+      connectSocket();
+    }
+  }
+
+
+
+  useEffect(() => {
+    authChecker();
+  }, [])
 
 
   return (

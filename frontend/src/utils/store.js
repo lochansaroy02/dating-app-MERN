@@ -1,6 +1,8 @@
+import { io } from 'socket.io-client';
 import { create, } from 'zustand';
 import { persist } from "zustand/middleware";
 
+const BASE_URL = "http://localhost:3000"
 export const useImageStore = create((set) => ({
     imageData: [],
     setImageData: (data) => set({ imageData: data }),
@@ -39,4 +41,40 @@ export const useLikesStore = create((set) => ({
     setLikes: (data) => set({
         likes: data
     })
+}))
+
+export const useSocketStore = create((set, get) => ({
+    socket: null,
+    authUser: null,
+    onlineUser: [],
+    setAuthUser: (data) => set({
+        authUser: data
+    }),
+    setSocket: (data) => set({
+        socket: data
+    }),
+    connectSocket: () => {
+
+        const { authUser } = get();
+
+        // check for auth only auth user connect to application
+
+        const socket = io(BASE_URL,
+            // here I need to add thisUser.UserID or create  a authUser store
+            {
+                query: {
+                    userId: authUser?._id
+                }
+            })
+        socket.connect();
+        set({ socket: socket })
+        socket.on("getOnlineUsers", (userId) => {
+            set({ onlineUser: userId })
+        })
+    },
+    disconnectSocket: () => {
+        if (get().socket?.connected) {
+            get().socket.disconnect();
+        }
+    }
 }))

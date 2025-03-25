@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useEmailStore } from '../utils/store';
+import { useEmailStore, useSocketStore } from '../utils/store';
 
 const SignUp = () => {
     const [name, setName] = useState("");
@@ -8,7 +8,7 @@ const SignUp = () => {
     const [password, setPassword] = useState("");
 
     const setUserEmail = useEmailStore((state) => state.setUserEmail);
-
+    const { connectSocket } = useSocketStore();
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,6 +22,7 @@ const SignUp = () => {
             });
             const data = await response.json();
             localStorage.setItem('email', email);
+            connectSocket();
             navigate('/login');
             if (data.success) {
 
