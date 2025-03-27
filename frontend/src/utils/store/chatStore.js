@@ -9,6 +9,9 @@ export const useChatStore = create((set, get) => ({
     selectedUser: null,
     isUserLoading: false,
     isMessagesLoading: false,
+    setIsMessagesLoading: (data) => set({
+        isMessagesLoading: data
+    }),
 
     setSelectedUser: (data) => set({ selectedUser: data }),
     getUsers: async () => {
@@ -21,22 +24,24 @@ export const useChatStore = create((set, get) => ({
             toast.error(error.response.data.message)
         }
     },
-
     getMessages: async (userId) => {
         const token = localStorage.getItem('token');
         set({ isMessagesLoading: true })
         try {
             const url = `http://localhost:3000/message/${userId}`;
+
             const res = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
             set({ messages: res.data.messages })
+
         } catch (error) {
             toast.error(error.response.data.message)
         }
     },
+
 
     sendMessage: async (messageData) => {
         const { selectedUser, messages } = get();
@@ -51,30 +56,30 @@ export const useChatStore = create((set, get) => ({
                 messages: [...messages, res.data.newMessage]
             })
 
-            console.log(res.data)
         } catch (error) {
             toast.error(error.response.data?.message)
         }
     },
 
     subscribeToMessage: () => {
-        const { selectedUser } = get();
-        if (!selectedUser) return
-        const socket = useSocketStore((state) => state.socket);
+        const { selectedUser, socket } = get();
+        if (!selectedUser) return;
 
-        // optimise this leter
-        // const socket = useSocketStore.getState().socket;
-        socket.on("newMassage", (newMassage) => {
+        // Directly use the socket from the store's state instead of using useSocketStore
+        const currentSocket = useSocketStore.getState().socket;
+        if (!currentSocket) return;
+
+        currentSocket.on("newMassage", (newMassage) => {
             set({
                 messages: [...get().messages, newMassage]
             });
         });
     },
+
     unSubscribeFromMessage: () => {
-        const socket = useSocketStore((state) => state.socket);
-        socket.off("newMassage")
+        const currentSocket = useSocketStore.getState().socket;
+        if (currentSocket) {
+            currentSocket.off("newMassage");
+        }
     }
-
-
 }))
-

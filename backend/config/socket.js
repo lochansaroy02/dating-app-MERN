@@ -16,7 +16,7 @@ const io = new Server(server, {
 
 
 const userSocketMap = {} // { userID: socketID}
-
+// console.log(userSocketMap)
 
 io.on("connection", (socket) => {
     console.log("A user Connected".green, socket.id);

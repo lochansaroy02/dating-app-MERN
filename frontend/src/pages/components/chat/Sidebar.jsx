@@ -12,12 +12,10 @@ const Sidebar = () => {
     const [onlineUsers, setOnlineUsers] = useState(null);
     const [filteredUsers, setFilteredUsers] = useState(null);
     const { onlineUser } = useSocketStore()
-    const { messages, users, selectedUser, isUserLoading, isMessagesLoading, setSelectedUser, getUsers, getMessages, } = useChatStore();
+    const { messages, users, selectedUser, isUserLoading, isMessagesLoading, setSelectedUser, getUsers } = useChatStore();
 
     const [showOnlineOnly, setShowOnlineOnly] = useState(false);
 
-
-    console.log(onlineUser);
 
     useEffect(() => {
         getUsers();

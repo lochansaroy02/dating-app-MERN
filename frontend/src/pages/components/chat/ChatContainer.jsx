@@ -1,23 +1,29 @@
 import React, { useEffect, useRef } from 'react';
+import { useThisUserStore } from '../../../utils/store';
 import { useChatStore } from '../../../utils/store/chatStore';
 import ChatHeader from './ChatHeader';
 import MessageInput from './MessageInput';
-import { useThisUserStore } from '../../../utils/store';
 
 const ChatContainer = () => {
-    const { messages = [], getMessages, selectedUser, subscribeToMessage, unSubscribeFromMessage } = useChatStore();
+    const { messages = [], selectedUser, unSubscribeFromMessage, isMessagesLoading, setIsMessagesLoading, getMessages } = useChatStore();
     const { thisUserData } = useThisUserStore();
     const messageEndRef = useRef(null);
-
     useEffect(() => {
-        subscribeToMessage()
-    }, [subscribeToMessage])
+        const subscribe = useChatStore.getState().subscribeToMessage;
+        subscribe();
+        return () => unSubscribeFromMessage();
+    }, []);
+
+
+
+
+
     useEffect(() => {
         if (selectedUser?._id) {
             getMessages(selectedUser._id);
         }
 
-        return () => unSubscribeFromMessage();
+
 
     }, [selectedUser?._id, getMessages, unSubscribeFromMessage]);
 
