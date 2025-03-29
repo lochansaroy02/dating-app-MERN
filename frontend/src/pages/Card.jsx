@@ -5,6 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { motion, useAnimation } from "framer-motion";
 
 const Card = ({ data, onSwipe }) => {
+    const user = data;
     const setThisUserData = useThisUserStore((state) => state.setThisUserData);
     const imageArr = data.images[0].split(",");
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -68,7 +69,7 @@ const Card = ({ data, onSwipe }) => {
 
     return (
         <motion.div
-            className="   h-screen justify-center"
+            className=" h-screen w-1/2  justify-center"
             drag="x"
             dragConstraints={{ left: -50, right: 50 }}
             onDragEnd={(event, info) => {
@@ -82,6 +83,8 @@ const Card = ({ data, onSwipe }) => {
             initial={{ opacity: 1, x: 0, rotate: 0 }}
             exit={{ opacity: 0 }}
         >
+
+
             <div className="h-3/4  w-80 relative overflow-hidden rounded-lg border border-neutral-500">
                 <div
                     className="flex w-full h-full transition-transform duration-700 ease-in-out"
@@ -94,7 +97,6 @@ const Card = ({ data, onSwipe }) => {
                     )}
                 </div>
 
-                {/* Navigation Buttons */}
                 <button onClick={handlePrev} className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded-full hover:bg-gray-900 transition">
                     ◀
                 </button>
@@ -103,7 +105,6 @@ const Card = ({ data, onSwipe }) => {
                     ▶
                 </button>
 
-                {/* Bottom section */}
                 <div className="absolute bottom-4 flex items-center w-3/4 px-2 justify-between left-4">
                     <h1 className="text-white text-2xl">
                         {data.name}, <span>{data.age}</span>

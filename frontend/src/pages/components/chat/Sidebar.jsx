@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 
 import { Users } from "lucide-react";
-import { useLikesStore, useSocketStore, useThisUserStore } from "../../../utils/store";
+import { useLikesStore, useSocketStore, useThisUserStore, useUserStore } from "../../../utils/store";
 import { useChatStore } from "../../../utils/store/chatStore";
 import SidebarSkeleton from "../../skeletons/SidebarSkeleton";
 import avatar from "../../../images/avatar.png"
 const Sidebar = () => {
+    const [matches, setMatches] = useState([]);
+
     const likes = useLikesStore((state) => state.likes);
     const thisUserData = useThisUserStore((state) => state.thisUserData);
     const [userLoading, setUserLoading] = useState(false);
@@ -13,6 +15,10 @@ const Sidebar = () => {
     const [filteredUsers, setFilteredUsers] = useState(null);
     const { onlineUser } = useSocketStore()
     const { messages, users, selectedUser, isUserLoading, isMessagesLoading, setSelectedUser, getUsers } = useChatStore();
+    const userData = useUserStore((state) => state.userData);
+
+    const setLikes = useLikesStore((state) => state.setLikes);
+
 
     const [showOnlineOnly, setShowOnlineOnly] = useState(false);
 
@@ -29,29 +35,38 @@ const Sidebar = () => {
     }
 
 
+    const getMatchedQueue = () => {
+        if (!thisUserData || !userData) return; // Avoid errors if data is not available
+
+        const ids = thisUserData.likes || [];
+        const likes = userData?.filter(user => ids.includes(user._id)) || [];
+        setLikes(likes);
+        const queue = likes.map((item) => {
+            const imageAr = item.images[0].split(',');
+            return imageAr;
+        });
+        const firstElements = queue.map(subArray => subArray[0]); // Extract first elements
+        setMatches(firstElements);
+    }
+    useEffect(() => {
+        getMatchedQueue();
+
+    }, [userData, thisUserData]);
     if (userLoading) return <SidebarSkeleton />;
 
     return (
-        <aside className=" h-[calc(100vh-8rem)]  w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
-            <div className="border-b border-base-300 w-full p-5">
-                <div className="flex items-center gap-2">
-                    <Users className="size-6" />
-                    <span className="font-medium hidden lg:block">Contacts</span>
-                </div>
-                {/* TODO: Online filter toggle */}
-                <div className="mt-3 hidden lg:flex items-center gap-2">
-                    <label className="cursor-pointer flex items-center gap-2">
-                        {/* <input
-                            type="checkbox"
-                            checked={showOnlineOnly}
-                            onChange={(e) => setShowOnlineOnly(e.target.checked)}
-                            className="checkbox checkbox-sm"
-                        /> */}
-                        <span className="text-sm">Show online only</span>
-                    </label>
-                </div>
-            </div>
+        <aside className=" h-[calc(100vh-8rem)]   w-20  lg:w-72 border-r border-base-300  flex flex-col transition-all duration-200">
+            <div className=' flex   gap-4 px-4 overflow-x-scroll  overflow-y-hidden p-8  '>
+                {
+                    matches.filter((item) => item != '').map((item, index) => (
+                        < div onClick={() => {
 
+                        }} key={index} className='h-10 w-10 border-4 border-blue-500  rounded-full  '>
+                            <img className='w-full h-full object-cover rounded-full' src={item} alt="" />
+                        </div>
+                    ))
+                }
+            </div>
             <div className="overflow-y-auto no-scrollbar p-4 gap-2  flex flex-col    w-full py-3">
                 {
                     users && users?.data?.filter((user) => user._id !== thisUserData._id)?.map((item, index) => (

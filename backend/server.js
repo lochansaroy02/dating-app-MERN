@@ -11,7 +11,7 @@ const { app, server } = require('./config/socket');
 
 
 
-const port = 3000;
+const port = process.env.PORT;
 app.use(fileUpload());
 app.use(cors());
 

@@ -19,7 +19,8 @@ const ChatHeader = () => {
                 </div>
                 <div>
                     <h1 className='text-base'>{selectedUser?.name}</h1>
-                    <h2 className='text-xs '>{onlineUser.includes(selectedUser._id) ? "Online" : "Offline"}</h2>
+                    {onlineUser.includes(selectedUser._id) && <h2 className='text-xs text-green-500 '>online</h2>
+                    }
                 </div>
             </div>
             <div onClick={() =>
