@@ -22,6 +22,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 connectToMongoDB();
 
+
+
 app.use('/user', userRoute);
 
 app.use('/auth', authRoute)
@@ -33,7 +35,11 @@ app.use('/message', messageRoute)
 
 
 
-
+app.get("/", (req, res) => {
+    res.json({
+        message: "Backend is running"
+    })
+})
 server.listen(port, () => {
     console.log(`Server is running on port ${port}`.yellow);
 });
