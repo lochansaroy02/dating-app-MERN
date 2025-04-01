@@ -5,18 +5,15 @@ import ChatHeader from './ChatHeader';
 import MessageInput from './MessageInput';
 
 const ChatContainer = () => {
-    const { messages = [], selectedUser, unSubscribeFromMessage, isMessagesLoading, setIsMessagesLoading, getMessages } = useChatStore();
+    const { messages = [], selectedUser, unSubscribeFromMessage, getMessages } = useChatStore();
     const { thisUserData } = useThisUserStore();
     const messageEndRef = useRef(null);
+
     useEffect(() => {
         const subscribe = useChatStore.getState().subscribeToMessage;
         subscribe();
         return () => unSubscribeFromMessage();
     }, []);
-
-
-
-
 
     useEffect(() => {
         if (selectedUser?._id) {
@@ -24,9 +21,10 @@ const ChatContainer = () => {
         }
 
 
+    }, [selectedUser?._id, getMessages]);
 
-    }, [selectedUser?._id, getMessages, unSubscribeFromMessage]);
 
+    console.log(messages)
     useEffect(() => {
         if (messageEndRef.current) {
             messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -46,7 +44,7 @@ const ChatContainer = () => {
     };
 
     return (
-        <div className="flex-1 flex flex-col h-[calc(100vh-8rem)]   .no-scrollbar overflow-auto">
+        <div className="flex-1 flex flex-col h-[calc(100vh-8rem)] overflow-auto">
             <ChatHeader />
 
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -55,9 +53,7 @@ const ChatContainer = () => {
                 )}
 
                 {messages?.map((message, index) => {
-                    const isSender =
-                        message.senderId.toString() === thisUserData._id.toString();
-
+                    const isSender = message.senderId === selectedUser._id;
                     const profileImage = isSender
                         ? thisUserData?.images?.[0]?.split(',')[0]?.trim() || '/avatar.png'
                         : selectedUser?.images?.[0]?.split(',')[0]?.trim() || '/avatar.png';
@@ -65,7 +61,7 @@ const ChatContainer = () => {
                     return (
                         <div
                             key={index}
-                            className={`chat ${!isSender ? 'chat-end' : 'chat-start'}`}
+                            className={`chat ${isSender ? 'chat-end' : 'chat-start'}`}
                             ref={index === messages.length - 1 ? messageEndRef : null}
                         >
                             <div className="chat-image avatar">

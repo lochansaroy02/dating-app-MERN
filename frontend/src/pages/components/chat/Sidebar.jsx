@@ -7,8 +7,8 @@ import SidebarSkeleton from "../../skeletons/SidebarSkeleton";
 import avatar from "../../../images/avatar.png"
 const Sidebar = () => {
     const [matches, setMatches] = useState([]);
-
     const likes = useLikesStore((state) => state.likes);
+    const likesID = likes.map((item) => item._id)
     const thisUserData = useThisUserStore((state) => state.thisUserData);
     const [userLoading, setUserLoading] = useState(false);
     const [onlineUsers, setOnlineUsers] = useState(null);

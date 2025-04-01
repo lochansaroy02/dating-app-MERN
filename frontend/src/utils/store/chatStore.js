@@ -17,7 +17,7 @@ export const useChatStore = create((set, get) => ({
     getUsers: async () => {
         set({ isUserLoading: true })
         try {
-            const url = "http://localhost:3000/user/get";
+            const url = import.meta.env.VITE_API_URL + "/user/get";
             const res = await axios.get(url)
             set({ users: res.data })
         } catch (error) {
@@ -28,7 +28,7 @@ export const useChatStore = create((set, get) => ({
         const token = localStorage.getItem('token');
         set({ isMessagesLoading: true })
         try {
-            const url = `http://localhost:3000/message/${userId}`;
+            const url = import.meta.env.VITE_API_URL + `/message/${userId}`;
 
             const res = await axios.get(url, {
                 headers: {
@@ -47,7 +47,7 @@ export const useChatStore = create((set, get) => ({
         const { selectedUser, messages } = get();
         const token = localStorage.getItem("token");
         try {
-            const res = await axios.post(`http://localhost:3000/message/send/${selectedUser._id}`, messageData, {
+            const res = await axios.post(import.meta.env.VITE_API_URL + `/message/send/${selectedUser._id}`, messageData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

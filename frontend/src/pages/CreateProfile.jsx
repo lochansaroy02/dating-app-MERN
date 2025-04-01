@@ -42,7 +42,7 @@ const CreateProfile = () => {
 
 
         try {
-            const response = await axios.post("http://localhost:3000/user/create", formData, {
+            const response = await axios.post(import.meta.env.VITE_API_URL + "/user/create", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -75,9 +75,9 @@ const CreateProfile = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-neutral-900 md:text-2xl dark:text-white text-center">
                 Create Your Profile
             </h1>
-        <div className='flex '>
+            <div className='flex  '>
 
-                <div className='w-1/2 px-16    text-white '>
+                <div className='w-1/2 px-16  hidden lg:flex  text-white '>
                     <div className="  grid grid-cols-2 m-12 gap-4  -mt-12  ">
                         <div className="flex flex-col gap-4">
                             <div className="row-span-2 w-[200px] h-[80px] bg-transparent">
@@ -98,7 +98,7 @@ const CreateProfile = () => {
                 </div>
 
 
-                <form className="space-y-4 h-fit   mt-4 w-1/2 p-8 rounded-lg bg-neutral-800  mr-4   " onSubmit={handleSubmit}>
+                <form className="space-y-4 h-fit  w-full   mt-4 lg:w-1/2  p-8 rounded-lg bg-neutral-800 mx-4   " onSubmit={handleSubmit}>
 
                     <div className='flex flex-col  justify-between'>
 

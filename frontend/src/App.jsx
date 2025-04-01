@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes, useNavigate } from "react-router-dom";
 import Card from './pages/Card';
 import Chat from './pages/Chat';
 import CreateProfile from './pages/CreateProfile';
@@ -14,12 +14,12 @@ import Profile from './pages/Profile';
 import SignUp from './pages/SignUp';
 import Task from './pages/Task';
 import { useSocketStore } from './utils/store';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 
 
 const App = () => {
-
 
   const { connectSocket, onlineUser } = useSocketStore();
 
@@ -27,7 +27,10 @@ const App = () => {
     const token = localStorage.getItem("token")
     if (token) {
       connectSocket();
+    } else {
+      // toast.error("Please login again", { icon: "⚠️" })
     }
+
   }
 
 
@@ -41,8 +44,8 @@ const App = () => {
 
 
 
-
     <Router>
+      <Toaster position='top-center' />
       {/* intact thing will be here */}
       <Navbar />
       <Routes>

@@ -1,8 +1,8 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { useThisUserStore } from "../utils/store";
-import toast, { Toaster } from "react-hot-toast";
 import { motion, useAnimation } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { useThisUserStore } from "../utils/store";
 
 const Card = ({ data, onSwipe }) => {
     const user = data;
@@ -11,8 +11,10 @@ const Card = ({ data, onSwipe }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const controls = useAnimation();
 
+    const thisUserData = useThisUserStore.getState().thisUserData;
+
+
     const handleLikes = async (userId) => {
-        const thisUserData = useThisUserStore.getState().thisUserData;
         const likerId = thisUserData?._id;
 
         if (!likerId) {
@@ -21,7 +23,7 @@ const Card = ({ data, onSwipe }) => {
         }
 
         try {
-            const response = await axios.put(`http://localhost:3000/user/likes/${userId}`, { likerId });
+            const response = await axios.put(import.meta.env.VITE_API_URL + `/user/likes/${userId}`, { likerId });
 
             toast.success("Liked");
             setThisUserData(response?.data?.data);
@@ -51,6 +53,7 @@ const Card = ({ data, onSwipe }) => {
                 transition: { duration: 0.35, ease: "easeInOut" },
             })
             .then(() => onSwipe(direction));
+        console.log("swipe")
     };
 
     // Handle keyboard swipes
@@ -69,7 +72,7 @@ const Card = ({ data, onSwipe }) => {
 
     return (
         <motion.div
-            className=" h-screen w-1/2  justify-center"
+            className=" h-screen  justify-center"
             drag="x"
             dragConstraints={{ left: -50, right: 50 }}
             onDragEnd={(event, info) => {

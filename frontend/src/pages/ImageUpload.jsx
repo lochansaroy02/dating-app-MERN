@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useImageStore } from "../utils/store";
 
 const ImageUpload = () => {
@@ -33,7 +33,7 @@ const ImageUpload = () => {
             // Removed fileName append as it's unnecessary
 
             try {
-                const response = await axios.post("http://localhost:3000/image/upload", formData, {
+                const response = await axios.post(import.meta.env.VITE_API_URL + "/image/upload", formData, {
                     headers: { "Content-Type": "multipart/form-data" },
 
 

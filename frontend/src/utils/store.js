@@ -2,7 +2,7 @@ import { io } from 'socket.io-client';
 import { create, } from 'zustand';
 import { persist } from "zustand/middleware";
 
-const BASE_URL = "http://localhost:3000"
+const BASE_URL = import.meta.env.VITE_API_URL
 export const useImageStore = create((set) => ({
     imageData: [],
     setImageData: (data) => set({ imageData: data }),
