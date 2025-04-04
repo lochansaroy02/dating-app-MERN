@@ -1,13 +1,15 @@
-const { createUser, getUsers, deleteUser, updateLikes } = require('../controllers/userController');
+const { createUser, getUsers, deleteUser, updateLikes, updateUser } = require('../controllers/userController');
 const express = require('express');
+const { protectRoute } = require('../middleware/authMiddleware');
 
 
 const router = express.Router();
 
 router.post('/create', createUser);
 router.get('/get', getUsers);
-// router.delete('/delete/:id', deleteUser);
 router.put('/likes/:userId', updateLikes);
+router.patch('/update/:id', updateUser)
+
 
 
 

@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useSocketStore, useThisUserStore } from '../utils/store';
+import { useProfileStore, useSocketStore, useThisUserStore } from '../utils/store';
 import toast from "react-hot-toast";
+import icon from "../images/icon.png"
 
 const Navbar = () => {
 
@@ -9,6 +10,9 @@ const Navbar = () => {
     const param = useParams();
     const data = useThisUserStore((state) => state.thisUserData);
     const setThisUserData = useThisUserStore((state) => state.setThisUserData);
+    const { thisUserData } = useThisUserStore();
+    const { setProfileData } = useProfileStore();
+
     const imageArr = data?.images?.[0]?.split(',');
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
@@ -34,11 +38,15 @@ const Navbar = () => {
     }, [])
 
     return (
-        <div className='bg-neutral-950  h-14 border-b  border-neutral-600  flex justify-between px-4 items-center w-full '>
+        <div className='bg-neutral-950  fixed top-0 h-14 border-b  border-neutral-600  flex justify-between px-4 items-center w-full '>
 
             <div onClick={() => {
                 navigate('/')
-            }} className='cursor-pointer '>
+            }} className='cursor-pointer flex  items-center '>
+                <div className='h-10 w-10 '>
+
+                    <img className='w-full h-full' src={icon} alt="" />
+                </div>
                 <h1 className='text-2xl bg-gradient-to-r from-sky-500 via-purple-800 to-red-600 bg-clip-text  font-bold text-transparent'>Love Verse</h1>
             </div>
             <div className='flex  items-center  gap-4 '>
@@ -49,14 +57,12 @@ const Navbar = () => {
 
                 {token && imageArr?.[0] &&
                     <div onClick={() => {
-                        navigate('/profile')
+                        setProfileData(thisUserData)
+                        navigate("/profile")
                     }} className='w-10 h-10 rounded-full cursor-pointer'>
-                        <img className='rounded-full w-10 h-10' src={imageArr?.[0]} alt="" />
+                        <img className='rounded-full object-cover -rotate-90 w-10 h-10' src={imageArr?.[0]} alt="" />
                     </div>
                 }
-
-
-
             </div>
         </div>
     )

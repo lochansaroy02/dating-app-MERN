@@ -69,7 +69,7 @@ const Sidebar = () => {
             </div>
             <div className="overflow-y-auto no-scrollbar p-4 gap-2  flex flex-col    w-full py-3">
                 {
-                    users && users?.data?.filter((user) => user._id !== thisUserData._id)?.map((item, index) => (
+                    users && users?.data?.filter((user) => user._id !== thisUserData?._id)?.map((item, index) => (
 
                         <div key={index} onClick={() => handleSelect(item)} className="flex gap-2   cursor-pointer items-center ">
                             <div className="h-14 w-14 relative bg-neutral-900  rounded-full">

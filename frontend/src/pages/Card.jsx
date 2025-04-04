@@ -2,7 +2,8 @@ import axios from "axios";
 import { motion, useAnimation } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { useThisUserStore } from "../utils/store";
+import { useProfileStore, useThisUserStore } from "../utils/store";
+import { useNavigate } from "react-router-dom";
 
 const Card = ({ data, onSwipe }) => {
     const user = data;
@@ -10,10 +11,9 @@ const Card = ({ data, onSwipe }) => {
     const imageArr = data.images[0].split(",");
     const [currentIndex, setCurrentIndex] = useState(0);
     const controls = useAnimation();
-
+    const { setProfileData } = useProfileStore();
     const thisUserData = useThisUserStore.getState().thisUserData;
-
-
+    const navigate = useNavigate();
     const handleLikes = async (userId) => {
         const likerId = thisUserData?._id;
 
@@ -88,9 +88,12 @@ const Card = ({ data, onSwipe }) => {
         >
 
 
-            <div className="h-3/4  w-80 relative overflow-hidden rounded-lg border border-neutral-500">
+            <div onClick={() => {
+                setProfileData(user)
+                navigate("/profile")
+            }} className="h-3/4 cursor-pointer w-80 relative overflow-hidden rounded-lg border border-neutral-500">
                 <div
-                    className="flex w-full h-full transition-transform duration-700 ease-in-out"
+                    className="flex w-full h-full   transition-transform duration-700 ease-in-out"
                     style={{ transform: `translateX(-${currentIndex * 100}%)` }}
                 >
                     {imageArr.map((item, index) => {

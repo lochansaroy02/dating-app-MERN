@@ -35,7 +35,32 @@ const createUser = async (req, res) => {
     }
 };
 
+const updateUser = async (req, res) => {
+    try {
+        const userID = req.params.id; // Fix: Extract ID correctly
+        const updatedData = req.body;
 
+        // Update user data
+        const updatedUser = await User.findByIdAndUpdate(userID, updatedData, {
+            new: true, // Return updated user document
+            runValidators: true, // Validate fields
+        });
+
+        if (!updatedUser) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        res.status(200).json({
+            message: "User updated successfully",
+            data: updatedUser
+        });
+    } catch (error) {
+        console.error("Error updating user:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
 
 
 const updateLikes = async (req, res) => {
@@ -87,4 +112,4 @@ const getUsers = async (req, res) => {
 }
 
 
-module.exports = { createUser, getUsers, updateLikes };
+module.exports = { createUser, getUsers, updateUser, updateLikes };

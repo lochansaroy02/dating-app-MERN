@@ -13,12 +13,22 @@ export const useUserStore = create((set) => ({
     setUserData: (data) => set({ userData: data }),
 }));
 
-
 export const useThisUserStore = create(
     persist(
         (set) => ({
             thisUserData: null,
             setThisUserData: (data) => set({ thisUserData: data }),
+        }),
+        {
+            name: "user-storage", // Key for localStorage
+        }
+    )
+);
+export const useProfileStore = create(
+    persist(
+        (set) => ({
+            profileData: null,
+            setProfileData: (data) => set({ profileData: data }),
         }),
         {
             name: "user-storage", // Key for localStorage

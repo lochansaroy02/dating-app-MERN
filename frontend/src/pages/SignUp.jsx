@@ -35,7 +35,7 @@ const SignUp = () => {
 
 
     return (
-        <div className='h-screen'>
+        <div className='h-screen pt-20'>
             <section className=" h-screen bg-neutral-900">
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                     <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-neutral-800 dark:border-neutral-700">
