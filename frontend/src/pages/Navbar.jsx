@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useProfileStore, useSocketStore, useThisUserStore } from '../utils/store';
 import toast from "react-hot-toast";
-import icon from "../images/icon.png"
+import { useNavigate, useParams } from 'react-router-dom';
+import icon from "../images/icon.png";
+import { useProfileStore, useSocketStore, useThisUserStore } from '../utils/store';
 
 const Navbar = () => {
 
@@ -38,10 +38,14 @@ const Navbar = () => {
     }, [])
 
     return (
-        <div className='bg-neutral-950  fixed top-0 h-14 border-b  border-neutral-600  flex justify-between px-4 items-center w-full '>
+        <div className='bg-neutral-950   fixed z-40  top-0 h-14 border-b  border-neutral-600  flex justify-between px-4 items-center w-full '>
 
             <div onClick={() => {
+
                 navigate('/')
+                if (window.innerWidth < 768) {
+                    navigate(`/feed`);
+                }
             }} className='cursor-pointer flex  items-center '>
                 <div className='h-10 w-10 '>
 

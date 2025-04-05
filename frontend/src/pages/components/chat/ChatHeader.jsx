@@ -1,14 +1,15 @@
-import React from 'react'
-import { useChatStore } from '../../../utils/store/chatStore'
-import avatar from "../../../images/avatar.png"
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import avatar from "../../../images/avatar.png";
 import { useSocketStore } from '../../../utils/store';
+import { useChatStore } from '../../../utils/store/chatStore';
 
 const ChatHeader = () => {
     const { selectedUser, setSelectedUser } = useChatStore();
     const { onlineUser } = useSocketStore();
-
+    const navigate = useNavigate();
     return (
-        <div className='border-b border-neutral-300  justify-between  items-center  p-2  flex  '>
+        <div className='border-b border-neutral-300 top-14 fixed  z-40 w-full lg:w-3/4  bg-neutral-800  justify-between  items-center  p-2  flex  '>
             <div className='flex  gap-2 items-center'>
 
                 <div className='w-10 h-10 bg-neutral-900  border rounded-full'>
@@ -23,8 +24,16 @@ const ChatHeader = () => {
                     }
                 </div>
             </div>
-            <div onClick={() =>
+            <div onClick={() => {
+
                 setSelectedUser(null)
+
+                if (window.innerWidth < 768) {
+                    navigate("/messages")
+                }
+
+            }
+
             } className='bg-neutral-900 h-6 w-6 cursor-pointer flex items-center justify-center  rounded-full  '>
                 <button className='text-sm'>X</button>
             </div>

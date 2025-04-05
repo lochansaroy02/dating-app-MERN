@@ -18,6 +18,8 @@ import SignUp from './pages/SignUp';
 import Task from './pages/Task';
 import NavMenu from './pages/mobile/NavMenu';
 import { useSocketStore } from './utils/store';
+import Sidebar from './pages/components/chat/Sidebar';
+import ChatContainer from './pages/components/chat/ChatContainer';
 
 
 
@@ -52,10 +54,13 @@ const App = () => {
         <Toaster position='top-center' />
         {/* intact thing will be here */}
         <Navbar />
-        <Routes>
+        <Routes >X
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/messages" element={<Sidebar />} />
+          <Route path="/messages/:id" element={<ChatContainer />} />
+
 
           {/* <Route path="/" element={<EditProfile />} /> */}
           <Route path="/" element={!token ? <Home /> : <HomePage />} />

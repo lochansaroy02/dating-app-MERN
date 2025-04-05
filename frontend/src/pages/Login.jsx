@@ -45,11 +45,10 @@ const Login = () => {
         }
     }
 
-    useEffect(() => {
-    }, [])
+
     return (
         <div>
-            <section className="bg-neutral-50 h-screen  dark:bg-neutral-900">
+            <section className="bg-neutral-50 pt-16    h-screen  dark:bg-neutral-900">
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                     <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-neutral-800 dark:border-neutral-700">
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">

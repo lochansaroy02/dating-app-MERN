@@ -15,10 +15,10 @@ const Chat = () => {
         // getChatUsers();
     }, [])
     return (
-        <div className=' bg-neutral-800'>
+        <div className=' bg-neutral-800  '>
             <div className="flex items-center justify-center py-4  px-4  ">
                 <div className="bg-neutral-700 rounded-lg  h-[calc(100vh-8rem)] shadow-xl w-full max-w-6xl ">
-                    <div className="flex  rounded-lg overflow-hidden ">
+                    <div className="flex    rounded-lg overflow-hidden ">
                         <Sidebar />
 
                         {

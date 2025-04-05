@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { Users } from "lucide-react";
+import avatar from "../../../images/avatar.png";
 import { useLikesStore, useSocketStore, useThisUserStore, useUserStore } from "../../../utils/store";
 import { useChatStore } from "../../../utils/store/chatStore";
 import SidebarSkeleton from "../../skeletons/SidebarSkeleton";
-import avatar from "../../../images/avatar.png"
 const Sidebar = () => {
     const [matches, setMatches] = useState([]);
     const likes = useLikesStore((state) => state.likes);
@@ -16,7 +16,7 @@ const Sidebar = () => {
     const { onlineUser } = useSocketStore()
     const { messages, users, selectedUser, isUserLoading, isMessagesLoading, setSelectedUser, getUsers } = useChatStore();
     const userData = useUserStore((state) => state.userData);
-
+    const navigate = useNavigate()
     const setLikes = useLikesStore((state) => state.setLikes);
 
 
@@ -31,7 +31,12 @@ const Sidebar = () => {
 
 
     const handleSelect = (user) => {
+
         setSelectedUser(user);
+
+        if (window.innerWidth < 768) {
+            navigate(`/messages/${user._id}`);
+        }
     }
 
 
@@ -55,8 +60,8 @@ const Sidebar = () => {
     if (userLoading) return <SidebarSkeleton />;
 
     return (
-        <aside className=" h-[calc(100vh-8rem)]   w-20  lg:w-72 border-r border-base-300  flex flex-col transition-all duration-200">
-            <div className=' flex   gap-4 px-4 overflow-x-scroll  overflow-y-hidden p-8  '>
+        <aside className="lg:w-72 border-r lg:fixed  h-full w-full no-scrollbar   border-base-300   lg:flex flex-col transition-all duration-200">
+            {/* <div className=' lg:flex hidden  bg-red-400 gap-4 px-4 overflow-x-scroll   overflow-y-hidden p-6  '>
                 {
                     matches.filter((item) => item != '').map((item, index) => (
                         < div onClick={() => {
@@ -66,8 +71,8 @@ const Sidebar = () => {
                         </div>
                     ))
                 }
-            </div>
-            <div className="overflow-y-auto no-scrollbar p-4 gap-2  flex flex-col    w-full py-3">
+            </div> */}
+            <div className="overflow-y-auto  px-4   gap-2 py-16     flex flex-col    w-full lg:py-3">
                 {
                     users && users?.data?.filter((user) => user._id !== thisUserData?._id)?.map((item, index) => (
 

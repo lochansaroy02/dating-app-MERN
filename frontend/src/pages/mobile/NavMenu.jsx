@@ -1,15 +1,17 @@
-import { HomeIcon, MessageCircle, UserRound } from 'lucide-react'
-import React from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { HomeIcon, MessageCircle, UserRound } from 'lucide-react';
+import React from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const NavMenu = () => {
+
+    const param = useParams();
     const navigate = useNavigate();
     const location = useLocation();
 
     const items = [
-        { name: "profile", icon: <UserRound />, to: "/login" },
-        { name: "home", icon: <HomeIcon />, to: "/" },
-        { name: "Messages", icon: <MessageCircle />, to: "/signup" },
+        { name: "profile", icon: <UserRound />, to: "/profile" },
+        { name: "home", icon: <HomeIcon />, to: "/feed" },
+        { name: "Messages", icon: <MessageCircle />, to: "/messages" },
     ];
 
     return (

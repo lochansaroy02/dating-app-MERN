@@ -23,16 +23,16 @@ const HomePage = () => {
 
 
     return (
-        <div className='py-4   overflow-y-hidden '>
+        <div className='pt-14   overflow-y-hidden '>
 
-            <div className='flex    border-t  border-neutral-600'>
+            <div className='flex    border-t'>
 
-                <div className=' w-1/4 p-4   '>
-                    <div className='gap-4 '>
+                <div className=' lg:w-1/4 p-4   '>
+                    <div className='gap-4 hidden  fixed h-screen lg:flex '>
                         <Sidebar />
                     </div>
                 </div>
-                <div className=' w-3/4 border-l  overflow-y-auto  border-neutral-600   '>
+                <div className=' lg:w-3/4 border-l  overflow-y-auto  border-neutral-600   '>
                     {
                         selectedUser == null ? <Feed /> : < ChatContainer />
                     }

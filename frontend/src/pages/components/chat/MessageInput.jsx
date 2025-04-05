@@ -37,7 +37,7 @@ const MessageInput = () => {
     };
 
     return (
-        <div className="flex items-center p-2 border-t">
+        <div className="flex items-center p-2 border-t fixed bg-neutral-800 bottom-12 w-full lg:w-3/4 ">
             <label className="cursor-pointer mr-2">
                 <AiOutlinePaperClip size={24} />
                 <input type="file" accept="image/*" className="hidden" onChange={handleImageChange} />

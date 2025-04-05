@@ -43,13 +43,14 @@ const ChatContainer = () => {
         });
     };
 
+
     return (
-        <div className="flex-1 flex flex-col h-[calc(100vh-8rem)] overflow-auto">
+        <div className="flex-1 pt-14   flex flex-col   relative  overflow-auto">
             <ChatHeader />
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div className="flex-1 overflow-y-auto  p-4  h-screen space-y-4">
                 {messages.length === 0 && (
-                    <p className="text-center text-gray-500">No messages yet.</p>
+                    <p className="text-center  text-gray-500">No messages yet.</p>
                 )}
 
                 {messages?.map((message, index) => {

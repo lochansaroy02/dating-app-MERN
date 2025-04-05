@@ -6,3 +6,5 @@
 // fix the error it showing all  the messages in the sending side not the receiver side
 
 
+Issues :
+1.when I loggedin the same browser it logged in as new user not the existed user.
