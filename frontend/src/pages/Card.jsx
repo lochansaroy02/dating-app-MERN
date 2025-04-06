@@ -1,9 +1,11 @@
+
 import axios from "axios";
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { motion, useAnimation } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { useProfileStore, useThisUserStore } from "../utils/store";
 import { useNavigate } from "react-router-dom";
+import { useProfileStore, useThisUserStore } from "../utils/store";
 
 const Card = ({ data, onSwipe }) => {
     const user = data;
@@ -14,6 +16,8 @@ const Card = ({ data, onSwipe }) => {
     const { setProfileData } = useProfileStore();
     const thisUserData = useThisUserStore.getState().thisUserData;
     const navigate = useNavigate();
+
+
     const handleLikes = async (userId) => {
         const likerId = thisUserData?._id;
 
@@ -70,6 +74,18 @@ const Card = ({ data, onSwipe }) => {
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, []);
 
+
+
+    const handleDelete = async (id) => {
+        try {
+            const response = await axios.delete(import.meta.env.VITE_API_URL + `/user/delete/${id}`)
+            const data = await response.data;
+            console.log(data);
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     return (
         <motion.div
             className=" h-screen  justify-center"
@@ -88,10 +104,7 @@ const Card = ({ data, onSwipe }) => {
         >
 
 
-            <div onClick={() => {
-                setProfileData(user)
-                navigate("/profile")
-            }} className="h-3/4 cursor-pointer w-80 relative overflow-hidden rounded-lg border border-neutral-500">
+            <div className="h-3/4 cursor-pointer w-80 relative overflow-hidden rounded-lg border border-neutral-500">
                 <div
                     className="flex w-full h-full   transition-transform duration-700 ease-in-out"
                     style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -101,27 +114,47 @@ const Card = ({ data, onSwipe }) => {
                         return <img key={index} className="h-full w-full object-cover shrink-0" src={link} alt="no image found" />
                     }
                     )}
+                    <div onClick={() => {
+                        setProfileData(user)
+                        navigate("/profile")
+                    }} className="h-3/4 w-[70%] left-12  justify-center flex items-center  absolute">
+
+                    </div>
                 </div>
 
-                <button onClick={handlePrev} className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded-full hover:bg-gray-900 transition">
-                    ◀
+
+                <button onClick={handlePrev} className="absolute top-1/2 left-2 cursor-pointer transform -translate-y-1/2 bg-neutral-700 text-white p-2 rounded-full hover:bg-neutral-900 transition">
+                    <ArrowLeft />
                 </button>
 
-                <button onClick={handleNext} className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded-full hover:bg-gray-900 transition">
-                    ▶
+                <button onClick={handleNext} className="absolute top-1/2 right-2 cursor-pointer transform -translate-y-1/2 bg-neutral-700 text-white p-2 rounded-full hover:bg-neutral-900 transition">
+                    <ArrowRight />
                 </button>
 
-                <div className="absolute bottom-4 flex items-center w-3/4 px-2 justify-between left-4">
-                    <h1 className="text-white text-2xl">
-                        {data.name}, <span>{data.age}</span>
-                    </h1>
-                    <button onClick={() => handleLikes(data._id)} className="bg-red-800 border-2 border-red-600 px-4 py-1 text-lg rounded-full">
-                        Like
-                    </button>
+                <div className="absolute bottom-0 h-1/4 items-center  px-4 backdrop-blur-lg pt-4 rounded-xl   left-4 border  flex  w-[90%]   justify-between ">
+
+                    <div>
+
+                        <h1 className="text-white text-2xl">
+                            {data.name}, <span>{data.age}</span>
+                        </h1>
+                        <h1 className="text-neutral-50 text-xl">{data.gender}</h1>
+                    </div>
+
+
+                    <div>
+
+                        <button onClick={() => handleLikes(data._id)} className="bg-red-800 border-2 border-red-600 px-4 py-1 text-lg rounded-full">
+                            Like
+                        </button>
+                    </div>
+                    {/* <button onClick={() => handleDelete(data._id)} className="bg-red-800 border-2 border-red-600 px-4 py-1 text-lg rounded-full">
+                        delete
+                    </button> */}
                 </div>
                 <Toaster position="top-right" />
             </div>
-        </motion.div>
+        </motion.div >
     );
 };
 

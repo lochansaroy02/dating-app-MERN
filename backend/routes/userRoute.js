@@ -9,6 +9,7 @@ router.post('/create', createUser);
 router.get('/get', getUsers);
 router.put('/likes/:userId', updateLikes);
 router.patch('/update/:id', updateUser)
+router.delete("/delete/:id", deleteUser)
 
 
 

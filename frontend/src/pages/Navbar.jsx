@@ -38,7 +38,7 @@ const Navbar = () => {
     }, [])
 
     return (
-        <div className='bg-neutral-950   fixed z-40  top-0 h-14 border-b  border-neutral-600  flex justify-between px-4 items-center w-full '>
+        <div className='bg-neutral-950    fixed z-40  top-0 h-14 border-b  border-neutral-600  flex justify-between px-4 items-center w-full '>
 
             <div onClick={() => {
 

@@ -31,7 +31,7 @@ const Feed = () => {
         getUser();
     }, [])
     return (
-        <div className="pt-16  text-white flex  justify-center items-center   ">
+        <div className="pt-16   text-white flex   justify-center items-center   ">
             <AnimatePresence>
                 {filteredUsers.length > 0 ? (
                     <Card key={currentIndex} data={filteredUsers[currentIndex]} onSwipe={handleSwipe} />
